@@ -1,8 +1,6 @@
 import {ArrowRight, GraduationCap} from "lucide-react";
-import { Button } from "../ui/button";
 import Link from "next/link";
-import { buttonVariants } from "../ui/button";
-import { cn } from "@/lib/utils";
+import LinkButton from "../utils/LinkButton";
 
 export default function Header(){
     return(
@@ -25,22 +23,18 @@ export default function Header(){
 
                 {/* Actions */}
                 <div className="flex items-center gap-2">
-                    <Link
-                        href="/login"
-                        className={cn(buttonVariants({ variant: "outline", size: "default", className: "px-6" }))}
-                    >
-                        Log In
-                    </Link>
 
-                    <Link
-                        href="/signup"
-                        className={cn(buttonVariants({ size: "default", className: "px-6" }))}
-                    >
+                    <LinkButton href="/login" variant="outline">
+                        Log In
+                    </LinkButton>
+
+                    <LinkButton href="/signup" variant="default">
                         <span className="inline-flex items-center gap-2">
-                        Sign Up
-                        <ArrowRight size={16} />
+                            Sign Up
+                            <ArrowRight size={16} />
                         </span>
-                    </Link>
+                    </LinkButton>
+
                 </div>
 
             </div>
