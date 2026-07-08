@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import { Button } from "../ui/button";
 import MockCurriculumCard from "./MockCurriculumCard";
 import LinkButton from "../utils/LinkButton";
 
@@ -57,7 +56,7 @@ export default function Hero(){
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <LinkButton href="/login" variant="default" height="14">
+                                <LinkButton href="/signup" variant="default" height="14">
                                     <span className="inline-flex items-center gap-2">
                                         Start For Free
                                         <ArrowRight size={16} />
