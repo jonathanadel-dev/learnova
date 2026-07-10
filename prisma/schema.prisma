@@ -7,9 +7,8 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role {
-  STUDENT
-  INSTRUCTOR
+enum SystemRole {
+  USER
   ADMIN
 }
 model User {
@@ -18,8 +17,8 @@ model User {
   email          String   @unique
   passwordHash   String
   avatarUrl      String?
-  role           Role     @default(STUDENT)
   emailVerified  DateTime?
+  systemRole     SystemRole @default(USER)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -36,7 +35,7 @@ model StudentProfile {
   preferredLanguage  String?
   currentStreak      Int      @default(0)
   longestStreak      Int      @default(0)
-  lastActivityAt     DateTime?         // drives streak logic — did they show up today?
+  lastActivityAt     DateTime?
 
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
