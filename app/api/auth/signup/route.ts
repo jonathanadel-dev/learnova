@@ -1,11 +1,9 @@
-// app/api/auth/signup/route.ts
-'use server';
 import { NextRequest, NextResponse } from 'next/server'
 import { hash } from 'bcryptjs'
 import prisma from '@/lib/prisma'
 import { signToken } from '@/lib/auth/jwt'
 import { setAuthCookie } from '@/lib/auth/session'
-import { signupSchema } from '@/lib/validation/auth';
+import { signupSchema } from '@/lib/schemas/auth';
 import { AppError } from '@/lib/errors';
 
 export async function POST(request: NextRequest) {

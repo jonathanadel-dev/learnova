@@ -4,7 +4,7 @@ import { compare } from 'bcryptjs'
 import prisma  from '@/lib/prisma'
 import { signToken } from '@/lib/auth/jwt'
 import { setAuthCookie } from '@/lib/auth/session'
-import { loginSchema } from '@/lib/validation/auth'
+import { loginSchema } from '@/lib/schemas/auth'
 import { AppError } from '@/lib/errors'
 
 export async function POST(request: NextRequest) {
