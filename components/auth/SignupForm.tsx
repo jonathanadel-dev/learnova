@@ -12,6 +12,8 @@ import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner"
+import { GhostLinkButton } from "../utils/LinkButton";
+import PasswordInput from "./PasswordInput";
 
 
 export default function SignupForm(){
@@ -53,6 +55,7 @@ export default function SignupForm(){
 
         toast.success('Account created successfully!')
         router.push('/home')
+        router.refresh()
     
     }
 
@@ -87,6 +90,7 @@ export default function SignupForm(){
                                         {...field}
                                         id="signup-name"
                                         aria-invalid={fieldState.invalid}
+                                        className="h-13"
                                         placeholder="Markus Holt"
                                     />
                                     {fieldState.invalid && (
@@ -103,11 +107,12 @@ export default function SignupForm(){
                                     <FieldLabel htmlFor="signup-email">
                                         EMAIL
                                     </FieldLabel>
-                                    <Input
+                                    <PasswordInput
                                         {...field}
-                                        id="signup-email"
+                                        className="h-13"
+                                        id="signup-password"
                                         aria-invalid={fieldState.invalid}
-                                        placeholder="markus.holt@example.com"
+                                        placeholder="Enter your password"
                                     />
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
@@ -128,6 +133,7 @@ export default function SignupForm(){
                                         id="signup-password"
                                         type="password"
                                         aria-invalid={fieldState.invalid}
+                                        className="h-13"
                                         placeholder="Min. 8 characters"
                                     />
                                     {fieldState.invalid && (
@@ -158,8 +164,8 @@ export default function SignupForm(){
                 </form>
             </CardContent>
 
-            <CardFooter className="justify-center pb-6 pt-0">
-                <p className="text-center text-sm text-hash">
+            <CardFooter className="flex flex-col justify-center gap-2">
+                <p className="text-center text-sm text-muted-foreground">
                     Already have an account?{" "}
                     <Link
                         href="/login"
@@ -169,6 +175,10 @@ export default function SignupForm(){
                         Log in
                     </Link>
                 </p>
+                <GhostLinkButton href="/home">
+                    Skip
+                    <ArrowRight size={14} />
+                </GhostLinkButton>
             </CardFooter>
         </AuthCard>
     )

@@ -2,7 +2,7 @@
 import AuthCard from "@/components/auth/AuthCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LoginInput, loginSchema, SignupInput, signupSchema } from "@/lib/schemas/auth";
+import { LoginInput, loginSchema } from "@/lib/schemas/auth";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,8 @@ import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner"
+import { GhostLinkButton } from "../utils/LinkButton";
+import PasswordInput from "./PasswordInput";
 
 
 export default function LoginForm(){
@@ -53,6 +55,7 @@ export default function LoginForm(){
 
         toast.success('Logged in successfully!')
         router.push('/home')
+        router.refresh()
     
     }
 
@@ -78,12 +81,13 @@ export default function LoginForm(){
                             control={control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="signup-email">
+                                    <FieldLabel htmlFor="login-email">
                                         EMAIL
                                     </FieldLabel>
                                     <Input
                                         {...field}
-                                        id="signup-email"
+                                        id="login-email"
+                                        className="h-13"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="markus.holt@example.com"
                                     />
@@ -98,13 +102,13 @@ export default function LoginForm(){
                             control={control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="signup-password">
+                                    <FieldLabel htmlFor="login-password">
                                         PASSWORD
                                     </FieldLabel>
-                                    <Input
+                                    <PasswordInput
                                         {...field}
-                                        id="signup-password"
-                                        type="password"
+                                        className="h-13"
+                                        id="login-password"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="Enter your password"
                                     />
@@ -136,8 +140,8 @@ export default function LoginForm(){
                 </form>
             </CardContent>
 
-            <CardFooter className="justify-center pb-6 pt-0">
-                <p className="text-center text-sm text-hash">
+            <CardFooter className="flex flex-col justify-center gap-2">
+                <p className="text-center text-sm text-muted-foreground">
                     New to Learnova?{" "}
                     <Link
                         href="/signup"
@@ -147,6 +151,10 @@ export default function LoginForm(){
                         Sign Up
                     </Link>
                 </p>
+                <GhostLinkButton href="/home">
+                    Skip
+                    <ArrowRight size={14} />
+                </GhostLinkButton>
             </CardFooter>
         </AuthCard>
     )

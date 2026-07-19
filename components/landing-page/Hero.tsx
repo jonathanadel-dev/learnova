@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import MockCurriculumCard from "./MockCurriculumCard";
-import LinkButton from "../utils/LinkButton";
+import {LinkButton} from "../utils/LinkButton";
 import DotGrid from "../utils/DotGrid";
 
 export default function Hero(){
@@ -35,10 +35,8 @@ export default function Hero(){
                                     style={{ letterSpacing: "-0.03em" }}
                                 >
                                     The LMS built for{" "}
-                                    <span
-                                        className="relative inline-block text-primary"
-                                    >
-                                        focused
+                                    <span className="ml-2 gradient-text font-heading font-bold tracking-tight">
+                                        Focused
                                     </span>{" "}
                                     learning
                                 </h1>

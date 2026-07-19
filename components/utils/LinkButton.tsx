@@ -9,13 +9,27 @@ interface LinkButtonProps extends VariantProps<typeof buttonVariants> {
     children: React.ReactNode;
 }
 
-export default function LinkButton({href, variant, height, children}:LinkButtonProps) {
+export function LinkButton({href, variant, height, children}:LinkButtonProps) {
     return (
         <Link
             href={href}
-            className={cn(buttonVariants({ variant, size: "default", className: `px-6 h-${height || '10'}` }))}
+            className={cn(buttonVariants({ variant, size: "default", className: `h-${height || '10'}` }))}
         >
             {children}
+        </Link>
+    )
+}
+
+export function GhostLinkButton({href, children}: {href: string, children: React.ReactNode}) {
+    return (
+        <Link
+            href={href}
+        >
+            <div
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm text-zinc-400 hover:text-foreground hover:bg-white/5 transition-all"
+            >
+                {children}
+            </div>
         </Link>
     )
 }
