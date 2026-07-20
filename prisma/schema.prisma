@@ -11,11 +11,16 @@ enum SystemRole {
   USER
   ADMIN
 }
+
+enum AuthProvider {
+  GOOGLE
+}
+
 model User {
   id             String   @id @default(uuid())
   name           String
   email          String   @unique
-  passwordHash   String
+  passwordHash   String?
   avatarUrl      String?
   emailVerified  DateTime?
   systemRole     SystemRole @default(USER)
@@ -24,7 +29,23 @@ model User {
 
   instructorProfile InstructorProfile?
   studentProfile StudentProfile?
+  accounts       Account[]
 }
+
+model Account {
+  id                String       @id @default(uuid())
+  userId            String
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  provider          AuthProvider
+  providerAccountId String
+
+  createdAt         DateTime     @default(now())
+
+  @@unique([provider, providerAccountId])
+  @@unique([userId, provider])
+}
+
 model StudentProfile {
   id                 String   @id @default(uuid())
   userId             String   @unique
@@ -40,6 +61,7 @@ model StudentProfile {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 }
+
 model InstructorProfile {
   id              String   @id @default(uuid())
   userId          String   @unique
