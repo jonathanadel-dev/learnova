@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
         })
 
 
-        if (!user || !(await compare(password, user.passwordHash))) {
+        if (!user || !user.passwordHash || !(await compare(password, user.passwordHash))) {
             throw new AppError('Invalid email or password', 401)
         }
 

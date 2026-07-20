@@ -12,8 +12,8 @@ import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner"
-import { GhostLinkButton } from "../utils/LinkButton";
 import PasswordInput from "./PasswordInput";
+import { GoogleIcon } from "../icons/GoogleIcon";
 
 
 export default function LoginForm(){
@@ -138,6 +138,22 @@ export default function LoginForm(){
                     </Button>
 
                 </form>
+
+                <div className="my-4 flex items-center gap-3">
+                    <Separator className="flex-1" />
+                    <span className="text-xs text-muted-foreground">OR</span>
+                    <Separator className="flex-1" />
+                </div>
+
+                <Button
+                    variant="outline"
+                    className="h-13 w-full justify-center gap-2"
+                    render={<a href="/api/auth/google" />}
+                >
+                    <GoogleIcon className="size-4" />
+                    Continue with Google
+                </Button>
+
             </CardContent>
 
             <CardFooter className="flex flex-col justify-center gap-2">
@@ -151,10 +167,6 @@ export default function LoginForm(){
                         Sign Up
                     </Link>
                 </p>
-                <GhostLinkButton href="/home">
-                    Skip
-                    <ArrowRight size={14} />
-                </GhostLinkButton>
             </CardFooter>
         </AuthCard>
     )
