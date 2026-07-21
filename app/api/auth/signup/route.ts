@@ -5,6 +5,7 @@ import { signToken } from '@/lib/auth/jwt'
 import { setAuthCookie } from '@/lib/auth/session'
 import { signupSchema } from '@/lib/schemas/auth';
 import { AppError } from '@/lib/errors';
+import { sendVerificationEmail } from '@/lib/auth/verification'
 
 export async function POST(request: NextRequest) {
     try {
@@ -50,10 +51,9 @@ export async function POST(request: NextRequest) {
 
         await setAuthCookie(token)
 
-
-        // sendVerificationEmail(user.id, user.email).catch((err) =>
-        //     console.error('Failed to send verification email:', err)
-        // )
+        sendVerificationEmail(user.id, user.email, user.name).catch((err) =>
+            console.error('Failed to send verification email:', err)
+        )
 
         return NextResponse.json(
             { id: user.id, name: user.name, email: user.email },
