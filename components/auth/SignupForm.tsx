@@ -54,7 +54,7 @@ export default function SignupForm(){
         }
 
         toast.success('Account created successfully!')
-        router.push(`/verify-email?email=${encodeURIComponent(values.email)}`)
+        router.push('/verify-email')
         router.refresh()
     
     }

@@ -79,7 +79,15 @@ export async function resolveGoogleUser(profile: GoogleUserInfo) {
             include: { studentProfile: true, instructorProfile: true },
         })
 
-        if (existingUser) {
+        // Only link to an existing account if it's already verified. An
+        // unverified User could have been created by anyone typing this
+        // email into the signup form - it's not proof of ownership. If we
+        // linked to it anyway, the real owner logging in with Google here
+        // would be handed straight into an account someone else already
+        // controls the password for. Treating it as a fresh signup instead
+        // means the impersonated account is simply abandoned/unverified,
+        // not silently taken over.
+        if (existingUser && existingUser.emailVerified) {
             await tx.account.create({
                 data: {
                     userId: existingUser.id,
@@ -88,15 +96,16 @@ export async function resolveGoogleUser(profile: GoogleUserInfo) {
                 },
             })
 
-            if (!existingUser.emailVerified && profile.email_verified) {
-                await tx.user.update({
-                    where: { id: existingUser.id },
-                    data: { emailVerified: new Date() },
-                })
-                existingUser.emailVerified = new Date()
-            }
-
             return existingUser
+        }
+
+        // An unverified User already sitting on this email isn't proof of
+        // ownership - anyone could have typed it into the password signup
+        // form. Reclaim the email the same way signup/route.ts already
+        // does for this exact case, so it doesn't collide with the
+        // unique constraint below.
+        if (existingUser) {
+            await tx.user.delete({ where: { id: existingUser.id } })
         }
 
         const newUser = await tx.user.create({

@@ -56,7 +56,7 @@ export default function CheckYourEmail({ email }: { email: string | undefined })
                 <p className="mt-3 text-sm text-muted-foreground">
                     We sent a verification link to the email:
                     <br />
-                    <span className="font-semibold text-primary-forground">{email}</span>
+                    <span className="font-semibold text-primary-foreground">{email}</span>
                 </p>
 
                 <p className="mt-4 text-xs text-muted-foreground">
