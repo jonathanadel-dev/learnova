@@ -9,6 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/VerificationToken'
+export type * from './models/Account'
 export type * from './models/StudentProfile'
 export type * from './models/InstructorProfile'
 export type * from './commonInputTypes'

@@ -15,3 +15,10 @@ export const SystemRole = {
 } as const
 
 export type SystemRole = (typeof SystemRole)[keyof typeof SystemRole]
+
+
+export const AuthProvider = {
+  GOOGLE: 'GOOGLE'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
