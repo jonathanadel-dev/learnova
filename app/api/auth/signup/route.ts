@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { after, NextRequest, NextResponse } from 'next/server'
 import { hash } from 'bcryptjs'
 import prisma from '@/lib/prisma'
 import { signToken } from '@/lib/auth/jwt'
@@ -51,9 +51,13 @@ export async function POST(request: NextRequest) {
 
         await setAuthCookie(token)
 
-        sendVerificationEmail(user.id, user.email, user.name).catch((err) =>
-            console.error('Failed to send verification email:', err)
-        )
+        after(async () => {
+            try {
+                await sendVerificationEmail(user.id, user.email, user.name);
+            } catch (err) {
+                console.error('Failed to send verification email:', err);
+            }
+        });
 
         return NextResponse.json(
             { id: user.id, name: user.name, email: user.email },
