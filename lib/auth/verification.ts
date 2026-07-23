@@ -1,9 +1,9 @@
 import { randomBytes, createHash } from 'crypto'
 import prisma from '@/lib/prisma'
-import { resend } from '@/lib/email/resend'
+import { mailer } from '@/lib/email/gmail'
 import { VerifyEmail } from '@/emails/VerifyEmail'
 
-const TOKEN_TTL_MS = 1000 * 60 * 60 * 48 // 48 hours
+const TOKEN_TTL_MS = 1000 * 60 * 60 * 48
 
 export function hashToken(token: string) {
     return createHash('sha256').update(token).digest('hex')
@@ -29,10 +29,12 @@ export async function sendVerificationEmail(userId: string, email: string, name:
     const rawToken = await createVerificationToken(userId)
     const verifyUrl = `${process.env.APP_URL}/api/auth/verify-email?token=${rawToken}`
 
-    await resend.emails.send({
-        from: 'Learnova <onboarding@resend.dev>',
+    const html = VerifyEmail({ name, verifyUrl })
+
+    await mailer.sendMail({
+        from: `Learnova <${process.env.GMAIL_SENDER_EMAIL}>`,
         to: email,
         subject: 'Verify your Learnova email',
-        react: VerifyEmail({ name, verifyUrl }),
+        html,
     })
 }

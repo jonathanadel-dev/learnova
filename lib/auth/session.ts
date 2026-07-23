@@ -1,4 +1,3 @@
-// lib/auth/session.ts
 import { cookies } from 'next/headers'
 import { verifyToken } from './jwt'
 import { JWTPayload } from 'jose'
@@ -14,6 +13,7 @@ export type CurrentUser = {
     systemRole: string
     hasStudentProfile: boolean
     hasInstructorProfile: boolean
+    emailVerified: boolean
 }
 
 export async function setAuthCookie(token: string) {
@@ -58,5 +58,6 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
         systemRole: user.systemRole,
         hasStudentProfile: !!user.studentProfile,
         hasInstructorProfile: !!user.instructorProfile,
+        emailVerified: !!user.emailVerified,
     }
 }

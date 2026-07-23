@@ -54,7 +54,7 @@ export default function SignupForm(){
         }
 
         toast.success('Account created successfully!')
-        router.push('/home')
+        router.push(`/verify-email?email=${encodeURIComponent(values.email)}`)
         router.refresh()
     
     }
@@ -107,12 +107,12 @@ export default function SignupForm(){
                                     <FieldLabel htmlFor="signup-email">
                                         EMAIL
                                     </FieldLabel>
-                                    <PasswordInput
+                                    <Input
                                         {...field}
-                                        className="h-13"
-                                        id="signup-password"
+                                        id="signup-email"
                                         aria-invalid={fieldState.invalid}
-                                        placeholder="Enter your password"
+                                        className="h-13"
+                                        placeholder="markusholt@me.com"
                                     />
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
@@ -128,13 +128,12 @@ export default function SignupForm(){
                                     <FieldLabel htmlFor="signup-password">
                                         PASSWORD
                                     </FieldLabel>
-                                    <Input
+                                    <PasswordInput
                                         {...field}
-                                        id="signup-password"
-                                        type="password"
-                                        aria-invalid={fieldState.invalid}
                                         className="h-13"
-                                        placeholder="Min. 8 characters"
+                                        id="signup-password"
+                                        aria-invalid={fieldState.invalid}
+                                        placeholder="Minimum 8 characters"
                                     />
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />

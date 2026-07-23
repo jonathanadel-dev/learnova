@@ -1,5 +1,5 @@
 'use client';
-import {ArrowLeft, ArrowRight, BookOpen, GraduationCap, Search, Users} from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, Search, Users} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {LinkButton, GhostLinkButton } from "../utils/LinkButton";
@@ -65,7 +65,7 @@ export default function Header({ user }: { user: CurrentUser | null }){
                     <span className="text-sm font-bold text-foreground tracking-tight">Learnova</span>
                 </Link>
 
-                {(pathname != '/signup' && pathname != '/login') ? (
+                {(pathname != '/signup' && pathname != '/login' && !pathname.startsWith('/verify-email')) ? (
                     <>
                         {/* Nav links */}
                         <nav className="hidden md:flex items-center gap-0.5 flex-1">
@@ -100,7 +100,7 @@ export default function Header({ user }: { user: CurrentUser | null }){
 
                 {pathname == '/' && (user ? goToDashboard : landingPageHeader)}
                 {pathname == '/home' && (user ? <UserMenu user={user} /> : landingPageHeader)}
-                {(pathname == '/signup' || pathname == '/login') && authHeader}
+                {(pathname == '/signup' || pathname == '/login' || pathname.startsWith('/verify-email')) && authHeader}
 
             </div>
         </header>

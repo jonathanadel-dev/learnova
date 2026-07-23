@@ -4,7 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header/Header";
 import { Toaster } from "@/components/ui/sonner"
-import { getCurrentUser } from "@/lib/auth/session";
+import { clearAuthCookie, getCurrentUser } from "@/lib/auth/session";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const sourceSerif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" });

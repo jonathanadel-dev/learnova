@@ -38,7 +38,6 @@ export async function POST() {
             return NextResponse.json({ error: err.message }, { status: err.statusCode })
         }
 
-        console.error('Resend verification email failed:', err)
         return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
     }
 }
