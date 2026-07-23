@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import MockCurriculumCard from "./MockCurriculumCard";
-import LinkButton from "../utils/LinkButton";
+import {LinkButton} from "../utils/LinkButton";
+import DotGrid from "../utils/DotGrid";
 
 export default function Hero(){
     return(
@@ -10,14 +11,7 @@ export default function Hero(){
             <section className="relative min-h-[88vh] flex items-center">
                 
                 {/* Dot Grid */}
-                <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 overflow-hidden"
-                    style={{
-                        backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)`,
-                        backgroundSize: "28px 28px",
-                    }}
-                />
+                <DotGrid />
                 {/* Hero glow */}
                 <div
                     aria-hidden
@@ -41,10 +35,8 @@ export default function Hero(){
                                     style={{ letterSpacing: "-0.03em" }}
                                 >
                                     The LMS built for{" "}
-                                    <span
-                                        className="relative inline-block text-primary"
-                                    >
-                                        focused
+                                    <span className="ml-2 gradient-text font-heading font-bold tracking-tight">
+                                        Focused
                                     </span>{" "}
                                     learning
                                 </h1>

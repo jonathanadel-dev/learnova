@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono, Inter, Figtree } from "next/font/google";
 import { Inter, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Header from "@/components/Header/Header";
+import { Toaster } from "@/components/ui/sonner"
+import { clearAuthCookie, getCurrentUser } from "@/lib/auth/session";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const sourceSerif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" });
@@ -14,18 +17,23 @@ export const metadata: Metadata = {
   description: "Learnova is a platform for learning and teaching."
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const user = await getCurrentUser();
+
   return (
     <html
       lang="en"
       className={cn("h-full", "antialiased", inter.variable, sourceSerif.variable, jetbrainsMono.variable)}
     >
       <body className="min-h-full flex flex-col">
+        <Header user={user} />
         {children}
+        <Toaster />
       </body>
     </html>
   );

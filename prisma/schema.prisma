@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SystemRole {
+  USER
+  ADMIN
+}
+
+enum AuthProvider {
+  GOOGLE
+}
+
+model User {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  passwordHash   String?
+  avatarUrl      String?
+  emailVerified  DateTime?
+  systemRole     SystemRole @default(USER)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  instructorProfile InstructorProfile?
+  studentProfile StudentProfile?
+  accounts       Account[]
+  verificationTokens VerificationToken[]
+}
+
+model VerificationToken {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tokenHash String   @unique
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String       @id @default(uuid())
+  userId            String
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  provider          AuthProvider
+  providerAccountId String
+
+  createdAt         DateTime     @default(now())
+
+  @@unique([provider, providerAccountId])
+  @@unique([userId, provider])
+}
+
+model StudentProfile {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  learningGoals      String?
+  timezone           String?
+  preferredLanguage  String?
+  currentStreak      Int      @default(0)
+  longestStreak      Int      @default(0)
+  lastActivityAt     DateTime?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model InstructorProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  bio             String?
+  title           String?
+  expertise       String[]
+  yearsExperience Int?
+  socialLinks     Json?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

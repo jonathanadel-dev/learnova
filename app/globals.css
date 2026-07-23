@@ -7,6 +7,7 @@
 @theme inline {
   --color-background: hsl(240 10% 4%);
   --color-foreground: hsl(0 0% 96%);
+  --color-hash: #71717A;
 
   --color-card: hsl(240 8% 8%);
   --color-card-foreground: hsl(0 0% 96%);
@@ -60,6 +61,8 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    scrollbar-width: thin;
+    scrollbar-color: oklch(from var(--primary) l c h / 0.5) transparent;
     @apply border-border outline-ring/50;
   }
 
@@ -85,7 +88,7 @@
 
 @layer utilities {
   .gradient-text {
-    background: linear-gradient(90deg, hsl(243 75% 65%), hsl(280 60% 78%));
+    background: linear-gradient(90deg, hsl(243 80% 58%), hsl(280 70% 65%));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
