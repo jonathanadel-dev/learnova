@@ -20,7 +20,6 @@ export default function PasswordInput({ className, ...props }: React.ComponentPr
             {hasValue && (
                 <button
                     type="button"
-                    tabIndex={-1}
                     onClick={() => setVisible((v) => !v)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
                     aria-label={visible ? "Hide password" : "Show password"}

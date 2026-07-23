@@ -32,30 +32,34 @@ export default function LoginForm(){
 
     const onSubmit = async (values: LoginInput) => {
 
-        const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(values),
-        })
-
-        const data = await res.json()
-
-        if (!res.ok) {
-            if (data.error && typeof data.error === 'object') {
-                Object.entries(data.error).forEach(([field, messages]) => {
-                    setError(field as keyof LoginInput, {
-                        message: (messages as string[])[0],
+        try{
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(values),
+            })
+    
+            const data = await res.json()
+    
+            if (!res.ok) {
+                if (data.error && typeof data.error === 'object') {
+                    Object.entries(data.error).forEach(([field, messages]) => {
+                        setError(field as keyof LoginInput, {
+                            message: (messages as string[])[0],
+                        })
                     })
-                })
-            } else {
-                toast.error(data.error ?? 'Something went wrong')
+                } else {
+                    toast.error(data.error ?? 'Something went wrong')
+                }
+                return
             }
-            return
+    
+            toast.success('Logged in successfully!')
+            router.push('/home')
+            router.refresh()
+        }catch(error){
+            toast.error('Unable to log in. Please try again.')
         }
-
-        toast.success('Logged in successfully!')
-        router.push('/home')
-        router.refresh()
     
     }
 

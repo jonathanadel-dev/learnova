@@ -22,6 +22,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import type { CurrentUser } from "@/lib/auth/session"
+import { toast } from "sonner"
 
 function getInitials(name: string) {
     return name
@@ -46,10 +47,13 @@ export default function UserMenu({ user }: { user: CurrentUser }) {
     async function handleLogout() {
         setLoggingOut(true)
         try {
-            await fetch("/api/auth/logout", { method: "POST" })
-        } finally {
-            router.push("/")
+            const response = await fetch("/api/auth/logout", { method: "POST" })
+            if (!response.ok) throw new Error("Logout failed")
+            router.replace("/")
             router.refresh()
+        } catch {
+            setLoggingOut(false)
+            toast.error("Failed to log out. Please try again.")
         }
     }
 

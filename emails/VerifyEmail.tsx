@@ -1,3 +1,13 @@
+
+function escapeHtml(input: string) {
+  return input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export function VerifyEmail({ name, verifyUrl }: { name: string; verifyUrl: string }) {
   return `
     <!DOCTYPE html>
@@ -24,7 +34,7 @@ export function VerifyEmail({ name, verifyUrl }: { name: string; verifyUrl: stri
                 </tr>
                 <tr>
                   <td style="color:#a1a1aa;font-size:14px;line-height:22px;">
-                    Hi ${name}, click the link below to verify your Learnova account and unlock
+                    Hi ${escapeHtml(name)}, click the link below to verify your Learnova account and unlock
                     the rest of the platform.
                   </td>
                 </tr>

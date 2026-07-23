@@ -26,6 +26,11 @@ export async function createVerificationToken(userId: string) {
 }
 
 export async function sendVerificationEmail(userId: string, email: string, name: string) {
+
+    if (!process.env.APP_URL) {
+        throw new Error('APP_URL is not configured')
+    }
+
     const rawToken = await createVerificationToken(userId)
     const verifyUrl = `${process.env.APP_URL}/api/auth/verify-email?token=${rawToken}`
 

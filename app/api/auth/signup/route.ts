@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
             )
         }
         const { name, email, password } = result.data
+    
+        const passwordHash = await hash(password, 10)
         
         const user = await prisma.$transaction(async (tx) => {
             const existing = await tx.user.findUnique({ where: { email } })
@@ -33,8 +35,6 @@ export async function POST(request: NextRequest) {
                 await tx.user.delete({ where: { id: existing.id } })
             }
             
-            const passwordHash = await hash(password, 10)
-
             return tx.user.create({
                 data: { name, email, passwordHash },
             })

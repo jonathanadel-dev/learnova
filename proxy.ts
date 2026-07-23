@@ -16,7 +16,7 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
 
-    if (!user?.hasStudentProfile) {
+    if (path !== "/student/onboarding" && !user.hasStudentProfile) {
       return NextResponse.redirect(new URL('/student/onboarding', request.url))
     }
 
@@ -28,7 +28,7 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url))
       }
 
-      if (!user?.hasInstructorProfile) {
+      if (path !== "/instructor/onboarding" && !user.hasInstructorProfile) {
         return NextResponse.redirect(new URL('/instructor/onboarding', request.url))
       }
 

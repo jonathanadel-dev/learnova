@@ -36,6 +36,7 @@ export async function exchangeGoogleCode(code: string) {
             grant_type: 'authorization_code',
             code,
         }),
+        signal: AbortSignal.timeout(10_000),
     })
 
     if (!res.ok) {
